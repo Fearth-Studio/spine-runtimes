@@ -29,17 +29,18 @@
 
 #pragma once
 
-#include "SpineSkeleton.h"
-#include "SpineAnimationState.h"
-#ifdef SPINE_GODOT_EXTENSION
 #include "SpineCommon.h"
+#ifdef SPINE_GODOT_EXTENSION
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/templates/vector.hpp>
 #include <godot_cpp/classes/rendering_server.hpp>
 #include <godot_cpp/classes/canvas_item_material.hpp>
 #else
 #include "scene/2d/node_2d.h"
+#include "servers/rendering/rendering_server.h"
 #endif
+#include "SpineSkeleton.h"
+#include "SpineAnimationState.h"
 
 class SpineSlotNode;
 
@@ -75,7 +76,11 @@ protected:
 
 #if VERSION_MAJOR > 3
 	RID mesh;
+#ifdef SPINE_GODOT_EXTENSION
 	uint32_t surface_offsets[RS::ARRAY_MAX];
+#else
+	uint32_t surface_offsets[RSE::ARRAY_MAX];
+#endif
 	int num_vertices;
 	int num_indices;
 	PackedByteArray vertex_buffer;

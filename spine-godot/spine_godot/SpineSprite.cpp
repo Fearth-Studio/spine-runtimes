@@ -60,6 +60,7 @@
 #include "core/math/transform_2d.h"
 #include "core/variant/array.h"
 #include "scene/resources/mesh.h"
+#include "scene/main/scene_tree.h"
 #if (VERSION_MAJOR >= 4 && VERSION_MINOR >= 6)
 #include "servers/rendering/rendering_server.h"
 #else
@@ -308,9 +309,9 @@ void SpineMesh2D::update_mesh(const Vector<Point2> &vertices,
 		arrays[Mesh::ARRAY_TEX_UV] = uvs;
 		arrays[Mesh::ARRAY_COLOR] = colors;
 		arrays[Mesh::ARRAY_INDEX] = indices;
-		RS::SurfaceData surface;
+		RenderingServerTypes::SurfaceData surface;
 		uint32_t skin_stride;
-		RS::get_singleton()->mesh_create_surface_data_from_arrays(&surface, (RS::PrimitiveType) Mesh::PRIMITIVE_TRIANGLES, arrays, TypedArray<Array>(), Dictionary(), Mesh::ArrayFormat::ARRAY_FLAG_USE_DYNAMIC_UPDATE);
+		RS::get_singleton()->mesh_create_surface_data_from_arrays(&surface, (RSE::PrimitiveType) Mesh::PRIMITIVE_TRIANGLES, arrays, TypedArray<Array>(), Dictionary(), Mesh::ArrayFormat::ARRAY_FLAG_USE_DYNAMIC_UPDATE);
 		RS::get_singleton()->mesh_add_surface(mesh, surface);
 #if VERSION_MINOR > 1
 		RS::get_singleton()->mesh_surface_make_offsets_from_format(surface.format, surface.vertex_count, surface.index_count, surface_offsets, vertex_stride, normal_tangent_stride, attribute_stride, skin_stride);
@@ -342,9 +343,9 @@ void SpineMesh2D::update_mesh(const Vector<Point2> &vertices,
 			}
 
 			float uv[2] = {(float) uvs[i].x, (float) uvs[i].y};
-			memcpy(&vertex_write_buffer[i * vertex_stride + surface_offsets[RS::ARRAY_VERTEX]], &vertex, sizeof(float) * 2);
-			memcpy(&attribute_write_buffer[i * attribute_stride + surface_offsets[RS::ARRAY_COLOR]], color, 4);
-			memcpy(&attribute_write_buffer[i * attribute_stride + surface_offsets[RS::ARRAY_TEX_UV]], uv, 8);
+			memcpy(&vertex_write_buffer[i * vertex_stride + surface_offsets[RSE::ARRAY_VERTEX]], &vertex, sizeof(float) * 2);
+			memcpy(&attribute_write_buffer[i * attribute_stride + surface_offsets[RSE::ARRAY_COLOR]], color, 4);
+			memcpy(&attribute_write_buffer[i * attribute_stride + surface_offsets[RSE::ARRAY_TEX_UV]], uv, 8);
 		}
 		RS::get_singleton()->mesh_surface_update_vertex_region(mesh, 0, 0, vertex_buffer);
 		RS::get_singleton()->mesh_surface_update_attribute_region(mesh, 0, 0, attribute_buffer);

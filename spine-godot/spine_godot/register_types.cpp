@@ -58,10 +58,17 @@
 #include "SpineBoneNode.h"
 #include "spine/Bone.h"
 
+#if VERSION_MAJOR > 3
+static Ref<SpineAtlasResourceFormatLoader> atlas_loader;
+static Ref<SpineAtlasResourceFormatSaver> atlas_saver;
+static Ref<SpineSkeletonFileResourceFormatLoader> skeleton_file_loader;
+static Ref<SpineSkeletonFileResourceFormatSaver> skeleton_file_saver;
+#else
 static SpineAtlasResourceFormatLoader *atlas_loader;
 static SpineAtlasResourceFormatSaver *atlas_saver;
 static SpineSkeletonFileResourceFormatLoader *skeleton_file_loader;
 static SpineSkeletonFileResourceFormatSaver *skeleton_file_saver;
+#endif
 
 #ifdef TOOLS_ENABLED
 #ifdef SPINE_GODOT_EXTENSION

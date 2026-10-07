@@ -57,7 +57,6 @@ using namespace godot;
 #define GEOMETRY2D Geometry2D
 // FIXME this doesn't do the same as the engine SNAME in terms of caching
 #define SNAME(name) StringName(name)
-#define RS RenderingServer
 #else
 #include "core/version.h"
 
@@ -72,6 +71,7 @@ using namespace godot;
 #if VERSION_MAJOR > 3
 #include "core/core_bind.h"
 #include "core/error/error_macros.h"
+#include "core/object/callable_mp.h"
 #define REFCOUNTED RefCounted
 #define EMPTY(x) ((x).is_empty())
 #define EMPTY_PTR(x) ((x)->is_empty())
@@ -83,6 +83,7 @@ using namespace godot;
 #define RES Ref<Resource>
 #define REF Ref<RefCounted>
 #define GEOMETRY2D Geometry2D
+#define RS RenderingServer
 #else
 #include "core/object.h"
 #include "core/reference.h"
